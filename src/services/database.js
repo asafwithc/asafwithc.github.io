@@ -4,10 +4,8 @@ require('dotenv').config();
 // Replace the uri string with your connection string.
 const uri = process.env.MONGO_URI;
 
-async function main() {
-  await mongoose.connect(uri);
-}
+mongoose.connect(uri)
+        .catch((err) => console.log(err));
 
-main().catch(err => console.log(err));
 
 
