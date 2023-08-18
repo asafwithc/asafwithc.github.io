@@ -1,11 +1,6 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+const mongoose = require("mongoose");
 
 // Replace the uri string with your connection string.
 const uri = process.env.MONGO_URI;
 
-mongoose.connect(uri)
-        .catch((err) => console.log(err));
-
-
-
+mongoose.connect(uri).catch((err) => console.log(err));
