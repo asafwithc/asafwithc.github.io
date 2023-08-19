@@ -1,17 +1,30 @@
-const User = require('../models/user')
+const User = require("../models/user");
 
 exports.getUsers = async (req, res, next) => {
-    const users = await User.find();
-    res.status(200).json(users);
-}
+  User.find()
+    .then((users) => res.status(200).json(users))
+    .catch((err) => res.status(500).json(err));
+};
 
-exports.addUser = async (req, res, next) => {
-    try {
-        const user = await User.create(req.body);
-        res.status(200).json(user);
-    } catch (err) {
-        console.log(err.message);
-        res.status(500).json({ message: err.message })
-    }
-}
+exports.postAddUser = async (req, res, next) => {
+  User.create(req.body)
+    .then((user) => res.status(200).json(user))
+    .catch((err) => res.status(500).json({ message: err.message }));
+};
 
+exports.postEditUser = async (req, res, next) => {
+  const userId = req.params["userId"];
+
+  User.findById(userId)
+    .then((user) => User.updateOne(user, req.body))
+    .then((ret) => {
+      res.status(200).json(ret);
+    })
+    .catch((err) => res.status(500).json({ message: err.message }));
+};
+
+exports.findById = async (req, res, next) => {
+  User.findById(req.params["userId"])
+    .then((user) => res.status(200).json(user))
+    .catch((err) => res.status(500).json({ message: err.message }));
+};

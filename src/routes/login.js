@@ -2,8 +2,6 @@ var auth = require('../services/firebase');
 var express = require('express');
 var router = express.Router();
 
-router.get('/', async (req, res) => {
-    console.log("sa");
-});
+router.get('/', async (req, res) => {});
 
 module.exports = router;
