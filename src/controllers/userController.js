@@ -23,8 +23,11 @@ exports.postEditUser = async (req, res, next) => {
     .catch((err) => res.status(500).json({ message: err.message }));
 };
 
-exports.findById = async (req, res, next) => {
+exports.getFindById = async (req, res, next) => {
   User.findById(req.params["userId"])
-    .then((user) => res.status(200).json(user))
+    .then((user) => {
+      if(user) res.status(200).json(user);
+      else throw new Error('User not found.');
+    })
     .catch((err) => res.status(500).json({ message: err.message }));
 };

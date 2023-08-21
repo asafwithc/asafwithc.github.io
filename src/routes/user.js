@@ -12,6 +12,6 @@ router.post('/add-user', userController.postAddUser);
 router.post('/update-user-by-id/:userId', userController.postEditUser);
 
 /* GET find user by ID. */
-router.get('/get-user-by-id/:userId', userController.findById);
+router.get('/get-user-by-id/:userId', userController.getFindById);
 
 module.exports = router;

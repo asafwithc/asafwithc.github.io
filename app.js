@@ -8,7 +8,7 @@ const cors = require("cors");
 const { error } = require("console");
 const errorController = require("./src/controllers/errorController");
 
-var middleware = require("./src/middlewares/decodeToken");
+var jwtAuth = require("./src/middlewares/jwtAuth");
 var indexRouter = require("./src/routes/index");
 var usersRouter = require("./src/routes/user");
 var loginRouter = require("./src/routes/login");
@@ -30,24 +30,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 //app.use(middleware.decodeToken);
 
+/* silinecek */
 app.use((req, res, next) => {
-    user
-      .findById("64dfb5c0d96b4787c46c105e")
-      .then((user) => {
-        req.user = user;
-        next();
-      })
-      .catch((err) => console.log(err));
-  });
+    console.log(req.body.googleAccessToken);
+    next();
+});
 
 app.use("/", indexRouter);
-app.use("/api", usersRouter);
-app.use("/api", caravanRouter);
+app.use("/api", jwtAuth.authorize, usersRouter);
+app.use("/api",caravanRouter);
 app.use("/login", loginRouter);
-
-/* silinecek */
-var user = require("./src/models/user");
-
 
 /* catch 404 and forward to error handler */
 app.use(errorController.catch404);

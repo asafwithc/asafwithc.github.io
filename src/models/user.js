@@ -11,16 +11,7 @@ const userSchema = Schema(
     email: {
       type: String,
       required: [true, "Please enter your email."],
-    },
-    caravans: [
-      {
-        caravanId: {
-          type: Schema.Types.ObjectId,
-          ref: "Product",
-          required: true,
-        }
-      }
-    ]
+    }
   },
   {
     timestamps: true,
