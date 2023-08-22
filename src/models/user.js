@@ -11,6 +11,13 @@ const userSchema = Schema(
     email: {
       type: String,
       required: [true, "Please enter your email."],
+    },
+    role: {
+      type: String,
+      required: [true, "no roles given."]
+    },
+    providerId: {
+      type: String
     }
   },
   {

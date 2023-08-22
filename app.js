@@ -8,6 +8,7 @@ const cors = require("cors");
 const { error } = require("console");
 const errorController = require("./src/controllers/errorController");
 
+var firebaseAuth = require("./src/middlewares/firebaseAuth")
 var jwtAuth = require("./src/middlewares/jwtAuth");
 var indexRouter = require("./src/routes/index");
 var usersRouter = require("./src/routes/user");
@@ -28,18 +29,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
-//app.use(middleware.decodeToken);
 
-/* silinecek */
-app.use((req, res, next) => {
-    console.log(req.body.googleAccessToken);
-    next();
-});
+
 
 app.use("/", indexRouter);
 app.use("/api", jwtAuth.authorize, usersRouter);
 app.use("/api",caravanRouter);
-app.use("/login", loginRouter);
+app.use("/login", firebaseAuth.decodeToken,loginRouter);
 
 /* catch 404 and forward to error handler */
 app.use(errorController.catch404);

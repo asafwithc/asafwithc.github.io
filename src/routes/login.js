@@ -4,16 +4,32 @@ var axios = require('axios');
 var router = express.Router();
 
 router.post('/', async (req, res, next) => {
+    let token = req.body.token;
 
-    const {googleAccessToken} = req.body;
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+        });
+        const payload = ticket.getPayload();
+        const userid = payload['sub'];
+      }
+      verify()
+      .then(()=>{
+          res.cookie('session-token', token);
+          res.send('success')
+      })
+      .catch(console.error);
 
-    axios
-        .get("https://www.googleapis.com/oauth2/v3/userinfo", {
-        headers: {
-            "Authorization": `Bearer ${googleAccessToken}`
-        }}).then(ress => console.log(ress))
 
-    console.log(googleAccessToken);
+    const googleAccessToken = req.body.googleAccessToken;
+    console.log(req.body)
+    // axios
+    //     .get("https://www.googleapis.com/oauth2/v3/userinfo", {
+    //     headers: {
+    //         "Authorization": `Bearer ${googleAccessToken}`
+    //     }}).then().catch(err => console.log(err))
+
 
     next();
 
