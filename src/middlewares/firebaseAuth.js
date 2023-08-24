@@ -6,6 +6,9 @@ exports.decodeToken = async (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   try {
     const decodeValue = await admin.auth().verifyIdToken(token);
+    console.log(decodeValue);
+    if(!decodeValue) throw new Error();
+
     var user = await User.findOne({ email: decodeValue.email });
     if (!user) {
       user = new User({
@@ -14,9 +17,10 @@ exports.decodeToken = async (req, res, next) => {
         providerId: decodeValue.user_id,
         role: "ROLE_USER",
       });
-    }
-    await user.save()
 
+      await user.save()
+    }
+    
     var jwtToken = jwt.authJWT(user);
     
     return res.json({ token: jwtToken });

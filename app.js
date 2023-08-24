@@ -35,7 +35,7 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/api", jwtAuth.authorize, usersRouter);
 app.use("/api",caravanRouter);
-app.use("/login", firebaseAuth.decodeToken,loginRouter);
+app.use("/login", firebaseAuth.decodeToken, loginRouter);
 
 /* catch 404 and forward to error handler */
 app.use(errorController.catch404);
