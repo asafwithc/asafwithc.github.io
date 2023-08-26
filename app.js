@@ -10,18 +10,16 @@ const errorController = require("./src/controllers/errorController");
 
 var firebaseAuth = require("./src/middlewares/firebaseAuth")
 var jwtAuth = require("./src/middlewares/jwtAuth");
+
+var db = require("./src/services/database");
+var firebase = require("./src/services/firebase");
+
 var indexRouter = require("./src/routes/index");
 var usersRouter = require("./src/routes/user");
 var loginRouter = require("./src/routes/login");
 var caravanRouter = require("./src/routes/caravan")
-var db = require("./src/services/database");
-var firebase = require("./src/services/firebase");
 
 var app = express();
-
-/* view engine setup */
-// app.set("views", path.join(__dirname, "src", "views"));
-// app.set("view engine", "jade");
 
 app.use(logger("dev"));
 app.use(express.json());
