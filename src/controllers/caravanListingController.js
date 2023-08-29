@@ -11,7 +11,7 @@ exports.postAddCaravanListing = (req, res) => {
     userId: userId,
     accomodation: accomodation,
     caravanType: caravanType,
-    imagesPath: images,
+    imagesPath: images
   });
 
   caravan
