@@ -5,8 +5,8 @@ exports.catch404 = (req, res, next) => {
 };
 
 exports.get404 = (err, req, res, next) => {
-  const status = error.statusCode || 500;
-  const message = error.message;
+  const status = err.statusCode || 500;
+  const message = err.message;
   res.status(status).json({ message: message });
 //   // set locals,  only providing error in development
 //   res.locals.message = err.message;

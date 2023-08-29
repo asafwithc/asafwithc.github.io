@@ -7,6 +7,6 @@ const caravanListing = require('../controllers/caravanListingController');
 
 router.post('/list', caravanListing.postAddCaravanListing);
 
-router.get('/list', caravanListing.getGetCaravansOfUser);
+router.get('/list', caravanListing.getGetCaravanListings);
 
 module.exports = router;

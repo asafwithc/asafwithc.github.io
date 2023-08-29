@@ -12,11 +12,11 @@ const caravanSchema = Schema(
         caravanType: {
             drivable: {
                 type: Boolean,
-                required: true
+                required: false
             },
             isTrailer: {
                 type: Boolean,
-                required: true
+                required: false
             }
         }, 
         title: {
@@ -48,7 +48,10 @@ const caravanSchema = Schema(
             minimumDays: {
                 type: Number
             }
-        }
+        },
+        imagesPath: [{
+            type: String
+        }]
     },
     {
         timestamps: true
