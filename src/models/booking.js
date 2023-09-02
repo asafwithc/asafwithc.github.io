@@ -13,6 +13,9 @@ const bookingSchema = new Schema({
     ref: "Caravan",
     required: true,
   },
+  bookingDates: [{
+    type: Date
+  }],
   totalPrice: {
     type: Number,
     required: true

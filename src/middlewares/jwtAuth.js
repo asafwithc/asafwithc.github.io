@@ -16,13 +16,14 @@ exports.authenticate = (req, res, next) => {
 };
 
 exports.authorize = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
+  const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) return res.status(500).json({ message: "No JWT token found." });
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.status(500).json({ message: err });
-    req.user = user.user;
+    req.userId = user.user._id;
     next();
   });
 };
+

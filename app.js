@@ -9,12 +9,11 @@ const { error } = require("console");
 const errorController = require("./src/controllers/errorController");
 const multer = require('multer');
 
-var firebaseAuth = require("./src/middlewares/firebaseAuth");
 var jwtAuth = require("./src/middlewares/jwtAuth");
 
 var db = require("./src/services/database");
 var firebase = require("./src/services/firebase");
-//var image = require("./src/services/multer");
+var image = require("./src/services/multer");
 
 var indexRouter = require("./src/routes/index");
 var usersRouter = require("./src/routes/user");
@@ -26,16 +25,17 @@ var app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
+app.use(multer({ storage: image.fileStorage, fileFilter: image.fileFilter }).array('images'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/", indexRouter);
 app.use("/api", usersRouter);
-app.use("/api", jwtAuth.authorize, caravanRouter);
-app.use("/user/caravan-list", jwtAuth.authorize, caravanListingRouter);
-app.use("/login", firebaseAuth.decodeToken, loginRouter);
+app.use("/api", caravanRouter);
+app.use("/user/caravan-list", caravanListingRouter);
+app.use("/login", loginRouter);
 
 /* catch 404 and forward to error handler */
 app.use(errorController.catch404);

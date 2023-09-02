@@ -9,22 +9,15 @@ const caravanSchema = Schema(
             ref: 'User',
             required: true
         },
-        caravanType: {
-            drivable: {
-                type: Boolean,
-                required: false
-            },
-            isTrailer: {
-                type: Boolean,
-                required: false
-            }
-        }, 
         title: {
             type: String
         },
         description: {
             type: String
         },
+        imagesPath: [{
+            type: String
+        }],
         accomodation: {
             beds: {
                 type: Number
@@ -49,9 +42,44 @@ const caravanSchema = Schema(
                 type: Number
             }
         },
-        imagesPath: [{
-            type: String
-        }]
+        location: {
+            longitude: {
+                type: String
+            },
+            latitude: {
+                type: String
+            }
+        },
+        caravanType: {
+            drivable: {
+                type: Boolean,
+                required: false
+            },
+            isTrailer: {
+                type: Boolean,
+                required: false
+            }
+        }, 
+        amenities: {
+            kitchen: [{
+                type: String
+            }],
+            bath: [{
+                type: String
+            }],
+            entertainment: [{
+                type: String
+            }],
+            temperatureControl: [{
+                type: String
+            }],
+            safety: [{
+                type: String
+            }],
+            laundry: [{
+                type: String
+            }]
+        }
     },
     {
         timestamps: true

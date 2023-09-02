@@ -1,14 +1,17 @@
 const express = require("express");
 const multer = require("multer");
+const hash = require('random-hash');
 
 var app = express();
 
 const fileStorage = multer.diskStorage({
-  destionation: (req, file, cb) => {
-    cb(null, '../../public/images');
+  destination: (req, file, cb) => {
+    cb(null, 'images');
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().toISOString() + "-" + file.originalname);
+    let temp = file.originalname.split('.');
+    const filename = temp[0] + '-' + hash.generateHash({length: 5}) + '.' + temp[1];
+    cb(null, filename);
   },
 });
 
@@ -24,6 +27,4 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'));
-
-// module.exports = { fileStorage, fileFilter };
+module.exports = { fileStorage, fileFilter };
