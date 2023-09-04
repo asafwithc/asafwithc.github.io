@@ -7,7 +7,7 @@ exports.getAllCaravans = (req, res, next) => {
 };
 
 exports.getCaravansOfUser = (req, res, next) => {
-  Caravan.find({ userId: req.user._id })
+  Caravan.find({ userId: req.userId })
     .then((result) => res.status(200).json(result))
     .catch((err) => res.status(500).json({ message: err.message }));
 };

@@ -13,10 +13,13 @@ const bookingSchema = new Schema({
     ref: "Caravan",
     required: true,
   },
+  bookingDates: [{
+    type: Date
+  }],
   totalPrice: {
     type: Number,
     required: true
   }
 });
 
-module.exports = mongoose.model('booking',bookingSchema);
+module.exports = mongoose.model('booking', bookingSchema);

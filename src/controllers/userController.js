@@ -13,7 +13,7 @@ exports.postAddUser = async (req, res, next) => {
 };
 
 exports.postEditUser = async (req, res, next) => {
-  const userId = req.params["userId"];
+  const userId = req.params.userId;
 
   User.findById(userId)
     .then((user) => User.updateOne(user, req.body))
@@ -24,7 +24,7 @@ exports.postEditUser = async (req, res, next) => {
 };
 
 exports.getFindById = async (req, res, next) => {
-  User.findById(req.params["userId"])
+  User.findById(req.params.userId)
     .then((user) => {
       if(user) res.status(200).json(user);
       else throw new Error('User not found.');

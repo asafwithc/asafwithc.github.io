@@ -18,6 +18,10 @@ const userSchema = Schema(
     },
     providerId: {
       type: String
+    },
+    hasValidLicense: {
+      type: Boolean,
+      default: false
     }
   },
   {
