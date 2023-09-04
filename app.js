@@ -33,7 +33,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/", indexRouter);
-app.use("/stripe", payment)
+app.use("/", payment);
 app.use("/api", usersRouter);
 app.use("/api", caravanRouter);
 app.use("/user/caravan-list", caravanListingRouter);

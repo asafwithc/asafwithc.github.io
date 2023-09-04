@@ -5,16 +5,37 @@ const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
 
 exports.paymentSheet = async (req, res) => {
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: 1000,
-        currency: 'try',
-        payment_method_types: ['card']
-    });
+    // const paymentIntent = await stripe.paymentIntents.create({
+    //     amount: 1000,
+    //     currency: 'try',
+    //     payment_method_types: ['card']
+    // });
 
-    res.json({
-        paymentIntent: paymentIntent.client_secret,
-        publishableKey: process.env.STRIPE_SECRET
-    });
+    // res.json({
+    //     paymentIntent: paymentIntent.client_secret,
+    //     publishableKey: process.env.STRIPE_SECRET
+    // });
+    const session = await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: 'T-shirt',
+              },
+              unit_amount: 2000,
+            },
+            quantity: 1,
+          },
+        ],
+        mode: 'payment',
+        payment_method_types: ['card'],
+        success_url: 'http://localhost:4242/success',
+        cancel_url: 'http://localhost:4242/cancel',
+      });
+    
+      res.redirect(303, session.url);
+    
 }
 
 // exports.managePostPayment = (req, res) => {
