@@ -1,7 +1,7 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const Booking = require('../models/booking');
 
-// const endpointSecret = 'whsec_a3ed6bb8e982c413c9713227d86bdfff85a7c5d7100b6bf55cc56da359aae5a9';
+const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
 
 exports.paymentSheet = async (req, res) => {
