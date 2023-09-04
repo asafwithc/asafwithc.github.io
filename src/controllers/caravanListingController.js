@@ -3,7 +3,7 @@ const path = require("path");
 
 const Caravan = require("../models/caravan");
 
-exports.postAddCaravanListing = (req, res) => {
+exports.postAddCaravanListing = (req, res, next) => {
   const userId = req.userId;
   const accomodation = req.body.accomodation;
   const caravanType = req.body.caravanType;
