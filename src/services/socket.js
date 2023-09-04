@@ -16,7 +16,8 @@ const io = new Server(www.server, {
 });
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
+  // console.log(socket.id);
+
   socket.on("add-user", async (data) => {
     senderId = jwt.decode(data.senderToken)._id;
 

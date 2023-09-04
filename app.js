@@ -20,6 +20,7 @@ var usersRouter = require("./src/routes/user");
 var loginRouter = require("./src/routes/login");
 var caravanRouter = require("./src/routes/caravan");
 var caravanListingRouter = require("./src/routes/caravanListing");
+var payment = require("./src/routes/payment")
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/", indexRouter);
+app.use("/stripe", payment)
 app.use("/api", usersRouter);
 app.use("/api", caravanRouter);
 app.use("/user/caravan-list", caravanListingRouter);
