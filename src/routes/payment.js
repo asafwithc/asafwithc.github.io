@@ -5,8 +5,8 @@ const paymentController = require('../controllers/paymentController');
 
 router.post('/payment', paymentController.paymentSheet);
 
-router.get('/success', paymentController.success);
+// router.get('/success', paymentController.success);
 
-// router.get('/post-payment', paymentController.managePostPayment);
+router.post('/webhook', express.raw({ type: 'application/json' }), paymentController.managePostPayment);
 
 module.exports = router;

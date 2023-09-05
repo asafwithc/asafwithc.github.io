@@ -6,8 +6,6 @@ const Message = require("../models/message");
 const OnlineUser = require("../models/onlineUser");
 const User = require('../models/user');
 
-
-
 const io = new Server(www.server, {
   cors: {
     origin: "http://localhost:3000",

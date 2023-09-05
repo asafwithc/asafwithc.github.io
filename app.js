@@ -7,7 +7,7 @@ var logger = require("morgan");
 const cors = require("cors");
 const { error } = require("console");
 const errorController = require("./src/controllers/errorController");
-const multer = require('multer');
+const multer = require("multer");
 
 var jwtAuth = require("./src/middlewares/jwtAuth");
 
@@ -20,20 +20,25 @@ var usersRouter = require("./src/routes/user");
 var loginRouter = require("./src/routes/login");
 var caravanRouter = require("./src/routes/caravan");
 var caravanListingRouter = require("./src/routes/caravanListing");
-var payment = require("./src/routes/payment")
+var payment = require("./src/routes/payment");
 
 var app = express();
 
+app.use("/stripe", payment);
+
 app.use(logger("dev"));
 app.use(express.json());
-app.use(multer({ storage: image.fileStorage, fileFilter: image.fileFilter }).array('images'));
+app.use(
+  multer({ storage: image.fileStorage, fileFilter: image.fileFilter }).array(
+    "images"
+  )
+);
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/", payment);
 app.use("/api", usersRouter);
 app.use("/api", caravanRouter);
 app.use("/user/caravan-list", caravanListingRouter);
