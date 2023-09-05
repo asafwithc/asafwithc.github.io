@@ -30,12 +30,17 @@ exports.paymentSheet = async (req, res) => {
         ],
         mode: 'payment',
         payment_method_types: ['card'],
-        success_url: 'http://localhost:4242/success',
-        cancel_url: 'http://localhost:4242/cancel',
+        success_url: 'http://localhost:3010/success',
+        cancel_url: 'http://localhost:3010/cancel',
       });
     
       res.redirect(303, session.url);
     
+}
+
+exports.success = (req, res, next) => {
+  console.log(req);
+  next();
 }
 
 // exports.managePostPayment = (req, res) => {
