@@ -3,7 +3,7 @@ var router = express.Router();
 
 const paymentController = require('../controllers/paymentController');
 
-router.post('/payment', paymentController.paymentSheet);
+router.post('/payment', express.json(), paymentController.paymentSheet);
 
 // router.get('/success', paymentController.success);
 

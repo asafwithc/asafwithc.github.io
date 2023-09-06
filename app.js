@@ -10,6 +10,7 @@ const errorController = require("./src/controllers/errorController");
 const multer = require("multer");
 
 var jwtAuth = require("./src/middlewares/jwtAuth");
+var firebaseAuth = require("./src/middlewares/firebaseAuth");
 
 var db = require("./src/services/database");
 var firebase = require("./src/services/firebase");
@@ -20,11 +21,12 @@ var usersRouter = require("./src/routes/user");
 var loginRouter = require("./src/routes/login");
 var caravanRouter = require("./src/routes/caravan");
 var caravanListingRouter = require("./src/routes/caravanListing");
-var payment = require("./src/routes/payment");
+var paymentRouter = require("./src/routes/payment");
+var bookingRouter = require("./src/routes/booking")
 
 var app = express();
 
-app.use("/stripe", payment);
+app.use("/stripe", paymentRouter);
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -42,7 +44,8 @@ app.use("/", indexRouter);
 app.use("/api", usersRouter);
 app.use("/api", caravanRouter);
 app.use("/user/caravan-list", caravanListingRouter);
-app.use("/login", loginRouter);
+app.use("/user", bookingRouter)
+app.use("/login", firebaseAuth.decodeToken, loginRouter);
 
 /* catch 404 and forward to error handler */
 app.use(errorController.catch404);

@@ -24,6 +24,6 @@ exports.decodeToken = async (req, res, next) => {
 
     return res.json({ token: jwtToken });
   } catch (e) {
-    return res.json({ message: "Internal error" });
+    return res.status(500).json({ message: "Internal error" });
   }
 };

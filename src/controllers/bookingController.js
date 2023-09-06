@@ -1,10 +1,11 @@
 const Booking = require("../models/booking");
 
-exports.postBooking = (req, res) => {
+exports.postBooking = (req, res, next) => {
   const userId = req.userId;
   const caravanId = req.body.caravanId;
   const bookingDates = req.body.bookingDates;
-  const pricePerNight = req.body.pricePerNight;
+  const pricePerNight = req.body.pricePerNight * 100;
+  
   
   const booking = new Booking({
     userId: userId,
