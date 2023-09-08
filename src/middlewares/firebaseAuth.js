@@ -3,8 +3,9 @@ const User = require("../models/user");
 const jwt = require("./jwtAuth");
 
 exports.decodeToken = async (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
   try {
+    const token = req.headers.authorization.split(" ")[1];
+
     const decodeValue = await admin.auth().verifyIdToken(token);
     if (!decodeValue) throw new Error();
 

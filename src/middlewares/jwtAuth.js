@@ -4,15 +4,16 @@ const User = require("../models/user");
 exports.authJWT = (user) => {
   const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET);
   return accessToken;
-}
+};
 
 exports.authenticate = (req, res, next) => {
-  User.findOne({ email: req.body.email }).then((user) => {
-    if (!user)
-      return res.status(500).json({ message: "User not found." });
-    const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET);
-    res.json({ Token: accessToken });
-  });
+  User.findOne({ email: req.body.email })
+    .then((user) => {
+      if (!user) return res.status(500).json({ message: "User not found." });
+      const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET);
+      res.json({ Token: accessToken });
+    })
+    .catch((err) => next(err));
 };
 
 exports.authorize = (req, res, next) => {
@@ -26,4 +27,3 @@ exports.authorize = (req, res, next) => {
     next();
   });
 };
-
