@@ -3,3 +3,4 @@ node_modules
 serviceAccount.json
 images/*
 karavan_uploader_accessKeys.csv
+qaravan.json
