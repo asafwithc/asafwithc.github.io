@@ -9,7 +9,7 @@ const User = require('../models/user');
 const io = new Server(www.server, {
   cors: {
     origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST"]
   },
 });
 
@@ -26,6 +26,7 @@ io.on("connection", (socket) => {
 
     await onlineUser.save().catch(err => console.log(err));
   });
+
   socket.on("send-msg", async (data) => {
     try {
       console.log(data.senderId);

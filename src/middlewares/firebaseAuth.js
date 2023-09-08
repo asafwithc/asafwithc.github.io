@@ -13,7 +13,7 @@ exports.decodeToken = async (req, res, next) => {
       user = new User({
         name: decodeValue.name,
         email: decodeValue.email,
-        providerId: decodeValue.user_id,
+        // providerId: decodeValue.user_id,
         role: "ROLE_USER"
       });
 
@@ -24,6 +24,6 @@ exports.decodeToken = async (req, res, next) => {
 
     return res.json({ token: jwtToken });
   } catch (e) {
-    return res.status(500).json({ message: "Internal error" });
+    return res.status(500).json({ message: e.message });
   }
 };

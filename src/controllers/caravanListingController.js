@@ -12,7 +12,7 @@ exports.postAddCaravanListing = (req, res, next) => {
     userId: userId,
     accomodation: accomodation,
     caravanType: caravanType,
-    imagesPath: imagesPath
+    imagesPath: imagesPath,
   });
 
   caravan
@@ -21,7 +21,7 @@ exports.postAddCaravanListing = (req, res, next) => {
     .catch((err) => {
       err.statusCode = !err.statusCode ? 500 : err.statusCode;
       next(err);
-    });;
+    });
 };
 
 exports.getGetCaravanListings = (req, res) => {
@@ -101,7 +101,7 @@ const clearImage = (paths) => {
   paths.forEach((imagePath) => {
     filePath = path.join(__dirname, "..", "..", imagePath);
     fs.unlink(filePath, (err) => {
-      if(err){
+      if (err) {
         throw new Error(err.message);
       }
     });
