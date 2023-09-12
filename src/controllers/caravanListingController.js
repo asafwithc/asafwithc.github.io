@@ -1,18 +1,22 @@
 const fs = require("fs");
 const path = require("path");
-
+const aws = require("../services/s3");
+const hash = require("random-hash");
+const sharp = require('sharp');
 const Caravan = require("../models/caravan");
 
-exports.postAddCaravanListing = (req, res, next) => {
+exports.postAddCaravanListing = async (req, res, next) => {
   const userId = req.userId;
   const accomodation = req.body.accomodation;
   const caravanType = req.body.caravanType;
-  const imagesPath = req.files.map((files) => files.path);
+  const imagesPath = await UploadToS3(req.files);
+
+  // const imagesPath = req.files.map((files) => files.path);
   const caravan = new Caravan({
     userId: userId,
     accomodation: accomodation,
     caravanType: caravanType,
-    imagesPath: imagesPath
+    imagesPath: imagesPath,
   });
 
   caravan
@@ -21,7 +25,7 @@ exports.postAddCaravanListing = (req, res, next) => {
     .catch((err) => {
       err.statusCode = !err.statusCode ? 500 : err.statusCode;
       next(err);
-    });;
+    });
 };
 
 exports.getGetCaravanListings = (req, res) => {
@@ -101,9 +105,45 @@ const clearImage = (paths) => {
   paths.forEach((imagePath) => {
     filePath = path.join(__dirname, "..", "..", imagePath);
     fs.unlink(filePath, (err) => {
-      if(err){
+      if (err) {
         throw new Error(err.message);
       }
     });
   });
+};
+
+const UploadToS3 = async (files) => {
+  const prefix = "experiment/";
+  var imagesURL = [];
+  
+  await Promise.all(files.map(async (file) => {
+    const imageName = prefix + hash.generateHash({ length: 32 }) + ".png";
+
+    const fileBuffer = await sharp(file.buffer)
+    .resize({ height: 960, width: 720, fit: "contain" })
+    .toBuffer()
+
+    const params = {
+      Bucket: process.env.BUCKET_NAME,
+      Key: imageName,
+      Body: fileBuffer,
+      ContentType: file.mimetype,
+    };
+
+    const command = new aws.PutObjectCommand(params);
+
+    await aws.s3Client.send(command);
+
+    const signedUrl = await aws.getSignedUrl(
+      aws.s3Client,
+      new aws.GetObjectCommand({
+        Bucket: process.env.BUCKET_NAME,
+        Key: imageName
+      })
+    );
+
+    imagesURL.push(signedUrl);
+  }));
+
+  return imagesURL;
 };

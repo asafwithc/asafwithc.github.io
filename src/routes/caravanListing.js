@@ -1,5 +1,6 @@
 var express = require('express');
 var jwtAuth = require("../middlewares/jwtAuth");
+var s3 = require('../services/s3');
 
 const router = express.Router();
 

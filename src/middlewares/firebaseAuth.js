@@ -3,8 +3,9 @@ const User = require("../models/user");
 const jwt = require("./jwtAuth");
 
 exports.decodeToken = async (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
   try {
+    const token = req.headers.authorization.split(" ")[1];
+
     const decodeValue = await admin.auth().verifyIdToken(token);
     if (!decodeValue) throw new Error();
 
@@ -13,7 +14,7 @@ exports.decodeToken = async (req, res, next) => {
       user = new User({
         name: decodeValue.name,
         email: decodeValue.email,
-        providerId: decodeValue.user_id,
+        // providerId: decodeValue.user_id,
         role: "ROLE_USER"
       });
 
@@ -24,6 +25,6 @@ exports.decodeToken = async (req, res, next) => {
 
     return res.json({ token: jwtToken });
   } catch (e) {
-    return res.status(500).json({ message: "Internal error" });
+    return res.status(500).json({ message: e.message });
   }
 };

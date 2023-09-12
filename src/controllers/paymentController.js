@@ -4,7 +4,7 @@ const Booking = require("../models/booking");
 
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
-// Should be used after a booking created.
+// Should be used after booking is created.
 exports.paymentSheet = async (req, res, next) => {
   const bookingId = req.body.bookingId;
 
@@ -45,7 +45,7 @@ exports.paymentSheet = async (req, res, next) => {
         mode: "payment",
         payment_method_types: ["card"],
         success_url: "http://localhost:3010/success",
-        cancel_url: "http://localhost:3010/cancel",
+        cancel_url: "http://localhost:3010/cancel"
       });
     })
     .then((session) => {
@@ -64,7 +64,7 @@ exports.paymentSheet = async (req, res, next) => {
 
 exports.managePostPayment = (req, res, next) => {
   let event = req.body;
-
+ 
   if (endpointSecret) {
     const signature = req.headers["stripe-signature"];
     try {
@@ -103,7 +103,7 @@ exports.managePostPayment = (req, res, next) => {
       const session = event.data.object;
 
       // Send an email to the customer asking them to retry their order
-      console.log("başaramadık");
+      console.log("başaramadik");
 
       break;
     }
@@ -120,7 +120,6 @@ const fulfillBooking = async (data, next, type) => {
     const booking = await Booking.findById(data.metadata.bookingId);
     booking.isPaid = true;
     await booking.save();
-    
   } catch (err) {
     err.statusCode = !err.statusCode ? 500 : err.statusCode;
     console.log(type);
